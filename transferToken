@@ -1,0 +1,12 @@
+import {ethers} from 'ethers';
+
+import TokenAbi from './abis/token_abi.json'
+
+const start = async () => {
+    const provider = new ethers.JsonRpcProvider(process.env.RPC_ENDPOINT || 'https://ethereum-goerli.publicnode.com')
+    const signer = new ethers.Wallet(privateKey, provider);
+    const tokenContract = new ethers.Contract('0x727fc459c1807e9dF43F4b2308Ad666A8584F07e', TokenAbi, signer)
+    await tokenContract.transfer('0x7EDD292Ca58617e365252a94319F7F64ee9A56Ac', 2)
+}
+
+start();
