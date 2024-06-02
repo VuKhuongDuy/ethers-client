@@ -1,17 +1,18 @@
 import {ethers} from 'ethers';
+import launchpadAbi from './abis/launchpad.json'
 
 const start = async () => {
-    const provider = new ethers.JsonRpcProvider('https://ethereum-goerli.publicnode.com')
-    const startBlock = 10014287
-    const endBlock = 10054287
+    const provider = new ethers.JsonRpcProvider('https://evm-rpc-arctic-1.sei-apis.com')
+    const startBlock = 23872857
+    const endBlock = 23872869
 
-    const contract = new ethers.Contract('address_of_contract', abi, provider)
+    const contract = new ethers.Contract('0xff6bb6fb618052996376f4037daf04738a1ffe63', launchpadAbi, provider)
 
     const logs = await getEventLogs(contract, startBlock, endBlock)
 
     console.log({logs})
 
-    contract.on("SetSigner", (sender, signer, event) => {
+    contract.on("MintNft", (sender, signer, event) => {
         console.log(sender, signer)
         console.log({event})
         // do whatever you want here
@@ -27,4 +28,27 @@ const getEventLogs = async (contract: any, fromBlock: number, toBlock: number) =
     return logs
 }
 
-start();
+// const encodeMsg = () => {
+//     const object = {
+//         "start_sale": {
+//             "cw721_address": "sei1l8tjmjagrrjtrzncewtvscs39dezdcg2cuvemen3wgunlfpr45qqpaawl9",
+//             "sale_type": "Fixed",
+//             "min_bid_increment_percent": 10000,
+//             "duration_type": "Fixed",
+//             "initial_price": "100",
+//             "royalty": {
+//                 "address": "sei1932egdcxujcgg6r7fgpef4xj9c6glm8tyz8tpd",
+//                 "rate": 5000
+//             },
+//             "denom": {
+//                 "native": "usei"
+//             }
+//         }
+//     }
+//     const encoder = new TextEncoder();
+//     const binaryData = encoder.encode(JSON.stringify(object));
+//     const base64Data = btoa(String.fromCharCode(...binaryData));
+//     return base64Data
+// }
+
+// encodeMsg();

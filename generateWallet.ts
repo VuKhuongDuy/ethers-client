@@ -8,3 +8,8 @@ const generateWallet = async () => {
 }
 
 generateWallet()
+
+const makeTransaction = async () => {
+  const provider = new ethers.JsonRpcProvider('https://evm-rpc-arctic-1.sei-apis.com')
+
+}
